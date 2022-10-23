@@ -23,7 +23,7 @@ namespace Assignment1
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public string StaffNo { get; set; }
+        public int StaffNo { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
         public int PracticeRegNum { get; set; }

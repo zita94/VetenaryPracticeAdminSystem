@@ -18,7 +18,6 @@ namespace Assignment1
         public Pet()
         {
             this.Visits = new HashSet<Visit>();
-            this.Treatments = new HashSet<Treatment>();
         }
     
         public int Id { get; set; }
@@ -26,11 +25,10 @@ namespace Assignment1
         public string Type { get; set; }
         public string Breed { get; set; }
         public int OwnerId { get; set; }
+        public string Num { get; set; }
     
         public virtual Owner Owner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Visit> Visits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2022 16:38:07
+-- Date Created: 10/23/2022 20:11:50
 -- Generated from EDMX file: C:\Users\Zita Cathcart\source\repos\Assignment1\VetPractice.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,50 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_PracticeVet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Vets] DROP CONSTRAINT [FK_PracticeVet];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VetVisit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_VetVisit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OwnerPet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Pets] DROP CONSTRAINT [FK_OwnerPet];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PetVisit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_PetVisit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VisitTreatment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Treatments] DROP CONSTRAINT [FK_VisitTreatment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TreatmentMedication]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Medications] DROP CONSTRAINT [FK_TreatmentMedication];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Practices]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Practices];
+GO
+IF OBJECT_ID(N'[dbo].[Vets]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Vets];
+GO
+IF OBJECT_ID(N'[dbo].[Visits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Visits];
+GO
+IF OBJECT_ID(N'[dbo].[Pets]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Pets];
+GO
+IF OBJECT_ID(N'[dbo].[Owners]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Owners];
+GO
+IF OBJECT_ID(N'[dbo].[Treatments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Treatments];
+GO
+IF OBJECT_ID(N'[dbo].[Medications]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Medications];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -41,7 +80,7 @@ CREATE TABLE [dbo].[Vets] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [Surname] nvarchar(max)  NOT NULL,
-    [StaffNo] nvarchar(max)  NOT NULL,
+    [StaffNo] int  NOT NULL,
     [ContactNo] nvarchar(max)  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
     [PracticeRegNum] int  NOT NULL
@@ -64,7 +103,8 @@ CREATE TABLE [dbo].[Pets] (
     [Name] nvarchar(max)  NOT NULL,
     [Type] nvarchar(max)  NOT NULL,
     [Breed] nvarchar(max)  NOT NULL,
-    [OwnerId] int  NOT NULL
+    [OwnerId] int  NOT NULL,
+    [Num] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -83,9 +123,8 @@ GO
 CREATE TABLE [dbo].[Treatments] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Cost] nvarchar(max)  NOT NULL,
-    [VisitId] int  NOT NULL,
-    [PetId] int  NOT NULL
+    [Cost] int  NOT NULL,
+    [VisitId] int  NOT NULL
 );
 GO
 
@@ -93,8 +132,9 @@ GO
 CREATE TABLE [dbo].[Medications] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Dose] nvarchar(max)  NOT NULL,
-    [TreatmentId] int  NOT NULL
+    [Dose] int  NOT NULL,
+    [TreatmentId] int  NOT NULL,
+    [Cost] int  NOT NULL
 );
 GO
 
@@ -236,21 +276,6 @@ GO
 CREATE INDEX [IX_FK_TreatmentMedication]
 ON [dbo].[Medications]
     ([TreatmentId]);
-GO
-
--- Creating foreign key on [PetId] in table 'Treatments'
-ALTER TABLE [dbo].[Treatments]
-ADD CONSTRAINT [FK_PetTreatment]
-    FOREIGN KEY ([PetId])
-    REFERENCES [dbo].[Pets]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PetTreatment'
-CREATE INDEX [IX_FK_PetTreatment]
-ON [dbo].[Treatments]
-    ([PetId]);
 GO
 
 -- --------------------------------------------------

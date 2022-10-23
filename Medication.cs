@@ -16,8 +16,9 @@ namespace Assignment1
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Dose { get; set; }
+        public int Dose { get; set; }
         public int TreatmentId { get; set; }
+        public int Cost { get; set; }
     
         public virtual Treatment Treatment { get; set; }
     }
