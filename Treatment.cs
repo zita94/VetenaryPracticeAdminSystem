@@ -12,24 +12,23 @@ namespace Assignment1
     using System;
     using System.Collections.Generic;
     
-    public partial class Vet
+    public partial class Treatment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Vet()
+        public Treatment()
         {
-            this.Visits = new HashSet<Visit>();
+            this.Medications = new HashSet<Medication>();
         }
     
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
-        public string StaffNo { get; set; }
-        public string ContactNo { get; set; }
-        public string Email { get; set; }
-        public int PracticeId { get; set; }
+        public string Examination { get; set; }
+        public int VisitId { get; set; }
+        public string Cost { get; set; }
+        public int PetId { get; set; }
     
-        public virtual Practice Practice { get; set; }
+        public virtual Visit Visit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Visit> Visits { get; set; }
+        public virtual ICollection<Medication> Medications { get; set; }
+        public virtual Pet Pet { get; set; }
     }
 }

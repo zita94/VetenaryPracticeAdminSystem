@@ -15,10 +15,10 @@ namespace Assignment1
     public partial class Medication
     {
         public int Id { get; set; }
-        public int PetId { get; set; }
-        public int VisitId { get; set; }
+        public string Name { get; set; }
+        public string Dose { get; set; }
+        public int TreatmentId { get; set; }
     
-        public virtual Pet Pet { get; set; }
-        public virtual Visit Visit { get; set; }
+        public virtual Treatment Treatment { get; set; }
     }
 }

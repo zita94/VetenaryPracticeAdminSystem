@@ -17,18 +17,19 @@ namespace Assignment1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Visit()
         {
-            this.Medications = new HashSet<Medication>();
+            this.Treatments = new HashSet<Treatment>();
         }
     
         public int Id { get; set; }
-        public string Treatment { get; set; }
         public int PetId { get; set; }
         public int PracticeId { get; set; }
         public int VetId { get; set; }
+        public string Notes { get; set; }
+        public string Date { get; set; }
     
         public virtual Pet Pet { get; set; }
         public virtual Vet Vet { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Medication> Medications { get; set; }
+        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

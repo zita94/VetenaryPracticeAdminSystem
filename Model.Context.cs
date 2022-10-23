@@ -30,6 +30,7 @@ namespace Assignment1
         public virtual DbSet<Practice> Practices { get; set; }
         public virtual DbSet<Vet> Vets { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
+        public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Medication> Medications { get; set; }
     }
 }

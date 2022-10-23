@@ -20,8 +20,10 @@ namespace Assignment1
             this.Vets = new HashSet<Vet>();
         }
     
-        public int Id { get; set; }
+        public int RegNum { get; set; }
         public string PracticeName { get; set; }
+        public string Address { get; set; }
+        public string TelNo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vet> Vets { get; set; }
