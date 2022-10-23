@@ -13,10 +13,10 @@ namespace Assignment1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ModelContainer : DbContext
+    public partial class VetPracticeContainer : DbContext
     {
-        public ModelContainer()
-            : base("name=ModelContainer")
+        public VetPracticeContainer()
+            : base("name=VetPracticeContainer")
         {
         }
     
@@ -25,11 +25,11 @@ namespace Assignment1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Owner> Owners { get; set; }
-        public virtual DbSet<Pet> Pets { get; set; }
         public virtual DbSet<Practice> Practices { get; set; }
         public virtual DbSet<Vet> Vets { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
+        public virtual DbSet<Pet> Pets { get; set; }
+        public virtual DbSet<Owner> Owners { get; set; }
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Medication> Medications { get; set; }
     }

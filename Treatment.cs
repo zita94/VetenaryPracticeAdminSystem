@@ -21,9 +21,9 @@ namespace Assignment1
         }
     
         public int Id { get; set; }
-        public string Examination { get; set; }
-        public int VisitId { get; set; }
+        public string Name { get; set; }
         public string Cost { get; set; }
+        public int VisitId { get; set; }
         public int PetId { get; set; }
     
         public virtual Visit Visit { get; set; }

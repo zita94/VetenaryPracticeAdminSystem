@@ -21,14 +21,13 @@ namespace Assignment1
         }
     
         public int Id { get; set; }
-        public int PetId { get; set; }
-        public int PracticeId { get; set; }
-        public int VetId { get; set; }
-        public string Notes { get; set; }
         public string Date { get; set; }
+        public string Notes { get; set; }
+        public int VetId { get; set; }
+        public int PetId { get; set; }
     
-        public virtual Pet Pet { get; set; }
         public virtual Vet Vet { get; set; }
+        public virtual Pet Pet { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Treatment> Treatments { get; set; }
     }

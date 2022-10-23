@@ -26,7 +26,7 @@ namespace Assignment1
         public string StaffNo { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
-        public int PracticeId { get; set; }
+        public int PracticeRegNum { get; set; }
     
         public virtual Practice Practice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

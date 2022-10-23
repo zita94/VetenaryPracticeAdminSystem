@@ -53,70 +53,70 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Medication.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.edmx</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
     </Compile>
     <Compile Include="Owner.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
     </Compile>
     <Compile Include="Pet.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
     </Compile>
     <Compile Include="Practice.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Treatment.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
     </Compile>
     <Compile Include="Vet.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VetPractice.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VetPractice.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VetPractice.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VetPractice.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VetPractice.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VetPractice.edmx</DependentUpon>
     </Compile>
     <Compile Include="Visit.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>VetPractice.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model.edmx.sql" />
-    <Content Include="Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.cs</LastGenOutput>
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Content>
+    <EntityDeploy Include="VetPractice.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>VetPractice.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="VetPractice.edmx.diagram">
+      <DependentUpon>VetPractice.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="VetPractice.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>VetPractice.Context.cs</LastGenOutput>
+      <DependentUpon>VetPractice.edmx</DependentUpon>
+    </Content>
+    <Content Include="VetPractice.edmx.sql" />
+    <Content Include="VetPractice.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>VetPractice.cs</LastGenOutput>
+      <DependentUpon>VetPractice.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
