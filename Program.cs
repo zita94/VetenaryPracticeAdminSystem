@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,8 +14,8 @@ namespace Assignment1
         private static string strEnterSelect = "ENTER Your Selection: ";
         private static string strEnterPetID = "ENTER PET ID: ";
         private static string strEnterVetID = "ENTER VET ID: ";
-        private static string strEnterDate = "ENTER DATE (YYYY/MM/DD): ";
-        private static string strEnterPetNum = "ENTER PET NUM: ";
+        private static string strEnterDate = "ENTER DATE (DD/MM/YYYY): ";
+        private static string strEnterPetNum = "ENTER PET ID: ";
         private static string strEnterRegNum = "ENTER REG NUM: ";
         private static string strLineBreak = "\n===========================================================\n";
 
@@ -135,17 +136,17 @@ namespace Assignment1
         private static void PetDetails(VetPracticeContainer db)
         {
             Console.Write(strEnterPetID);
-            int petID;
-            bool isParsed = int.TryParse(Console.ReadLine(), out petID);
+            int iPetID;
+            bool isParsed = int.TryParse(Console.ReadLine(), out iPetID);
 
             while (!isParsed)
             {
                 Console.WriteLine("INVALID PET ID. ID CONSIST OF NUMBERS ONLY");
                 Console.Write(strEnterPetID);
-                isParsed = int.TryParse(Console.ReadLine(), out petID);
+                isParsed = int.TryParse(Console.ReadLine(), out iPetID);
             }
 
-            var query = from pet in db.Pets where (pet.Id == petID) select pet;
+            var query = from pet in db.Pets where (pet.Id == iPetID) select pet;
 
             if (query.Any())
             {
@@ -193,12 +194,13 @@ namespace Assignment1
             Console.Write(strEnterDate);
             string strDateTime = Console.ReadLine();
 
-            while (!Regex.IsMatch(strDateTime, "[0-9]{4}/[0-9]{2}/[0-9]{2}"))
+            while (!Regex.IsMatch(strDateTime, "[0-3][0-9]/[0-1][0-9]/[0-9]{4}"))
             {
                 Console.WriteLine("Invalid date");
                 Console.Write(strEnterDate);
                 strDateTime = Console.ReadLine();
             }
+
 
             var query = from vet in db.Vets where vet.StaffNo == iVetID select vet;
             if (query.Any())
@@ -206,25 +208,25 @@ namespace Assignment1
                 string strVetName = query.FirstOrDefault().FirstName;
                 string strVetSurname = query.FirstOrDefault().Surname;
 
-                var query1 = from app in db.Visits where app.Date.Equals(strDateTime) where app.VetId.Equals(iVetID) select app;
-                string strNotes = query1.FirstOrDefault().Notes;
-
-
                 Console.WriteLine("\nAPPOINTMENTS FOR VET: " + strVetSurname + ", " + strVetName + ", DATE: " + strDateTime);
                 Console.WriteLine("|{0,10}|{1,15}|{2,20}|", "Pet", "Owner", "Notes");
                 Console.WriteLine("----------------------------------------------------");
 
+                var query1 = from app in db.Visits where app.VetId.Equals(iVetID) select app;
                 foreach (var item in query1)
                 {
-                    var query2 = from pet in db.Pets
-                                 where pet.Id == item.PetId
-                                 select pet;
-                    string strPetName = query2.FirstOrDefault().Name;
-                    int iOwnerId = query2.FirstOrDefault().OwnerId;
-                    var query3 = from owner in db.Owners where owner.Id == iOwnerId select owner;
-                    string strOwnerName = query3.FirstOrDefault().Surname + ", " + query3.FirstOrDefault().FirstName;
+                    if (item.Date.ToString().Contains(strDateTime))
+                    {
+                        string strNotes = item.Notes;
+                        var query2 = from pet in db.Pets where pet.Id == item.PetId select pet;
+                        string strPetName = query2.FirstOrDefault().Name;
+                        int iOwnerId = query2.FirstOrDefault().OwnerId;
+                        var query3 = from owner in db.Owners where owner.Id == iOwnerId select owner;
+                        string strOwnerName = query3.FirstOrDefault().Surname + ", " + query3.FirstOrDefault().FirstName;
 
-                    Console.WriteLine("|{0,10}|{1,15}|{2,20}", strPetName, strOwnerName, strNotes);
+                        Console.WriteLine("|{0,10}|{1,15}|{2,20}|", strPetName, strOwnerName, strNotes);
+
+                    }
                 }
 
                 Console.WriteLine();
@@ -239,38 +241,72 @@ namespace Assignment1
 
         private static void VisitCostBreakdown(VetPracticeContainer db)
         {
-            List<int> iTreatmentIDList = new List<int>();
-            List<string> strTreatmentNameList = new List<string>();
+            string strTreatmentName = "";
             List<int> iCostList = new List<int>();
             Console.Write(strEnterPetNum);
-            string strPetNum = Console.ReadLine();
+            int iTotalCost = 0;
+            int iTreatmentCost = 0;
+            int iPetID;
+            bool isParsed = int.TryParse(Console.ReadLine(), out iPetID);
 
-            var query = from visit in db.Visits orderby visit.Date select visit;
-
-            int iVisitID = query.FirstOrDefault().Id;
-            int iPetID = query.FirstOrDefault().PetId;
-
-            var query1 = from pet in db.Pets where pet.Id == iPetID select pet;
-            string strPetName = query1.FirstOrDefault().Name;
-
-            var query2 = from treatment in db.Treatments where treatment.VisitId == iVisitID select treatment;
-
-            if (query2.Any())
+            while (!isParsed)
             {
-                foreach (var item in query2)
-                {
-                    iTreatmentIDList.Add(query2.FirstOrDefault().Id);
-                    strTreatmentNameList.Add(query2.FirstOrDefault().Name);
-                    iCostList.Add(query2.FirstOrDefault().Cost);
-                }
+                Console.WriteLine("INVALID PET ID. ID CONSIST OF NUMBERS ONLY");
+                Console.Write(strEnterVetID);
+                isParsed = int.TryParse(Console.ReadLine(), out iPetID);
+            }
 
-                foreach (int treatmentID in iTreatmentIDList)
-                {
-                    var query3 = from medication in db.Medications where medication.TreatmentId == treatmentID select medication;
-                    int iMedCost = query3.FirstOrDefault().Cost;
 
-                    Console.WriteLine();
+            var VisitQuery = from visit in db.Visits orderby visit.Date descending where visit.PetId == iPetID select visit;
+
+            string strVisitNotes = VisitQuery.FirstOrDefault().Notes;
+            int iVisitID = VisitQuery.FirstOrDefault().Id;
+            string strDate = VisitQuery.FirstOrDefault().Date.ToString();
+            int iVetID = VisitQuery.FirstOrDefault().VetId;
+
+
+            var VetQuery = from vet in db.Vets where vet.Id == iVetID select vet;
+            string strVetName = VetQuery.FirstOrDefault().Surname + ", " + VetQuery.FirstOrDefault().FirstName;
+
+            var PetQuery = from pet in db.Pets where pet.Id == iPetID select pet;
+            string strPetName = PetQuery.FirstOrDefault().Name;
+
+            Console.WriteLine("\nMOST RECENT VISIT FOR: " + strPetName + "\nDATE: " + strDate);
+
+            var TreatmentQuery = from treatment in db.Treatments where treatment.VisitId == iVisitID select treatment;
+
+            if (TreatmentQuery.Any())
+            {
+                foreach (var treatment in TreatmentQuery)
+                {
+                    int iTreatmentID = treatment.Id;
+                    strTreatmentName = treatment.Name;
+                    iTreatmentCost = treatment.Cost;
+                    iTotalCost += treatment.Cost;
+                    var MedQuery = from medication in db.Medications where medication.TreatmentId == iTreatmentID select medication;
+
+                    Console.WriteLine("TREATMENT FOR: " + strTreatmentName + "\nITEMISED BILL:");
+                    Console.WriteLine("============================================");
+                    Console.WriteLine("|{0,20}|{1,10}|{2,10}|", "Medication", "Dose", "Cost");
+                    Console.WriteLine("--------------------------------------------");
+
+                    foreach (var medication in MedQuery)
+                    {
+                        int iMedCost = medication.Cost;
+                        int iDose = medication.Dose;
+                        iTotalCost += iMedCost;
+                        string strMedication = medication.Name;
+                        Console.WriteLine("|{0,20}|{1,10}|{2,10}|", strMedication, iDose.ToString()+"mg", "£" + iMedCost.ToString());
+                        Console.WriteLine("--------------------------------------------");
+                    }
+
+
+
                 }
+                
+                Console.WriteLine("{0,43}", "Appointment Cost: £" + iTreatmentCost);
+                Console.WriteLine("{0,43}", "TOTAL: £" + iTotalCost.ToString());
+                //Console.WriteLine("{0,43}", "£" + iTotalCost.ToString());
             }
 
             Console.WriteLine(strLineBreak);

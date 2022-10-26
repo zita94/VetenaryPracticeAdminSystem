@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2022 20:11:50
+-- Date Created: 10/24/2022 17:14:17
 -- Generated from EDMX file: C:\Users\Zita Cathcart\source\repos\Assignment1\VetPractice.edmx
 -- --------------------------------------------------
 
@@ -90,7 +90,7 @@ GO
 -- Creating table 'Visits'
 CREATE TABLE [dbo].[Visits] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Date] nvarchar(max)  NOT NULL,
+    [Date] datetime  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
     [VetId] int  NOT NULL,
     [PetId] int  NOT NULL

@@ -64,7 +64,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
     <Property Name="VetId" Type="int" Nullable="false" />
     <Property Name="PetId" Type="int" Nullable="false" />
@@ -248,7 +248,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="String" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
           <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Vet" Relationship="VetPractice.VetVisit" FromRole="Visit" ToRole="Vet" />
           <Property Name="VetId" Type="Int32" Nullable="false" />

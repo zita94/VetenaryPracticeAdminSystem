@@ -21,7 +21,7 @@ namespace Assignment1
         }
     
         public int Id { get; set; }
-        public string Date { get; set; }
+        public System.DateTime Date { get; set; }
         public string Notes { get; set; }
         public int VetId { get; set; }
         public int PetId { get; set; }
