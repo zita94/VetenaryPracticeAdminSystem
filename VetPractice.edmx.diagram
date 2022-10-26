@@ -17,8 +17,8 @@
         <AssociationConnector Association="VetPractice.OwnerPet" />
         <AssociationConnector Association="VetPractice.PetVisit" />
         <AssociationConnector Association="VetPractice.VisitTreatment" ManuallyRouted="true" >
-          <ConnectorPoint PointX="6.375" PointY="3.1611437707581209" />
-          <ConnectorPoint PointX="4.375" PointY="1.8632587992969381" />
+          <ConnectorPoint PointX="6.375" PointY="3.988627480957728" />
+          <ConnectorPoint PointX="4.375" PointY="2.1029554199902902" />
         </AssociationConnector>
         <AssociationConnector Association="VetPractice.TreatmentMedication" />
       </Diagram>

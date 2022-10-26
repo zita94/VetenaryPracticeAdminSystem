@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/24/2022 17:14:17
+-- Date Created: 10/26/2022 16:05:54
 -- Generated from EDMX file: C:\Users\Zita Cathcart\source\repos\Assignment1\VetPractice.edmx
 -- --------------------------------------------------
 
@@ -93,7 +93,8 @@ CREATE TABLE [dbo].[Visits] (
     [Date] datetime  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
     [VetId] int  NOT NULL,
-    [PetId] int  NOT NULL
+    [PetId] int  NOT NULL,
+    [Cost] int  NOT NULL
 );
 GO
 
@@ -103,8 +104,7 @@ CREATE TABLE [dbo].[Pets] (
     [Name] nvarchar(max)  NOT NULL,
     [Type] nvarchar(max)  NOT NULL,
     [Breed] nvarchar(max)  NOT NULL,
-    [OwnerId] int  NOT NULL,
-    [Num] nvarchar(max)  NOT NULL
+    [OwnerId] int  NOT NULL
 );
 GO
 
@@ -123,7 +123,6 @@ GO
 CREATE TABLE [dbo].[Treatments] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Cost] int  NOT NULL,
     [VisitId] int  NOT NULL
 );
 GO

@@ -25,6 +25,7 @@ namespace Assignment1
         public string Notes { get; set; }
         public int VetId { get; set; }
         public int PetId { get; set; }
+        public int Cost { get; set; }
     
         public virtual Vet Vet { get; set; }
         public virtual Pet Pet { get; set; }

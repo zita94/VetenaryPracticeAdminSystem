@@ -68,6 +68,7 @@
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
     <Property Name="VetId" Type="int" Nullable="false" />
     <Property Name="PetId" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Pets">
     <Key>
@@ -78,7 +79,6 @@
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Breed" Type="nvarchar(max)" Nullable="false" />
     <Property Name="OwnerId" Type="int" Nullable="false" />
-    <Property Name="Num" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Owners">
     <Key>
@@ -97,7 +97,6 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Cost" Type="int" Nullable="false" />
     <Property Name="VisitId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Medications">
@@ -248,13 +247,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Vet" Relationship="VetPractice.VetVisit" FromRole="Visit" ToRole="Vet" />
           <Property Name="VetId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Pet" Relationship="VetPractice.PetVisit" FromRole="Visit" ToRole="Pet" />
           <Property Name="PetId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Treatments" Relationship="VetPractice.VisitTreatment" FromRole="Visit" ToRole="Treatment" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Pet">
           <Key>
@@ -267,7 +267,6 @@
           <NavigationProperty Name="Owner" Relationship="VetPractice.OwnerPet" FromRole="Pet" ToRole="Owner" />
           <Property Name="OwnerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Visits" Relationship="VetPractice.PetVisit" FromRole="Pet" ToRole="Visit" />
-          <Property Name="Num" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -287,7 +286,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Cost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Visit" Relationship="VetPractice.VisitTreatment" FromRole="Treatment" ToRole="Visit" />
           <Property Name="VisitId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Medications" Relationship="VetPractice.TreatmentMedication" FromRole="Treatment" ToRole="Medication" />
@@ -412,6 +410,7 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="VetId" ColumnName="VetId" />
           <ScalarProperty Name="PetId" ColumnName="PetId" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -423,7 +422,6 @@
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="Breed" ColumnName="Breed" />
           <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-          <ScalarProperty Name="Num" ColumnName="Num" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -444,7 +442,6 @@
         <MappingFragment StoreEntitySet="Treatments">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
           <ScalarProperty Name="VisitId" ColumnName="VisitId" />
         </MappingFragment>
       </EntityTypeMapping>

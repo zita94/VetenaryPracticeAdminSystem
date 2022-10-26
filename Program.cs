@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Assignment1
 {
@@ -78,32 +74,42 @@ namespace Assignment1
 
         private static void PetOwnerDetails(VetPracticeContainer db)
         {
-            var query = from owner in db.Owners orderby owner.Surname select owner;
-            Console.WriteLine("OWNER DETAILS");
-            Console.WriteLine("|{0,10}|{1,10}|{2,25}|{3,15}|{4,20}|", "First Name", "Surname", "Address", "TelNo", "Email");
-            foreach (var item in query)
+            var OwnerQuery = from owner in db.Owners orderby owner.Surname select owner;
+            if (OwnerQuery.Any())
             {
-                Console.WriteLine("--------------------------------------------------------------------------------------");
-                Console.WriteLine(String.Format("|{0,10}|{1,10}|{2,25}|{3,15}|{4,20}|", item.FirstName, item.Surname, item.Address, item.TelNo, item.Email));
+                Console.WriteLine("OWNER DETAILS");
+                Console.WriteLine("|{0,10}|{1,10}|{2,25}|{3,15}|{4,20}|", "First Name", "Surname", "Address", "TelNo", "Email");
+                foreach (var item in OwnerQuery)
+                {
+                    Console.WriteLine("--------------------------------------------------------------------------------------");
+                    Console.WriteLine(String.Format("|{0,10}|{1,10}|{2,25}|{3,15}|{4,20}|", item.FirstName, item.Surname, item.Address, item.TelNo, item.Email));
+                }
             }
-
-            Console.WriteLine(strLineBreak);
-
+            else
+            {
+                Console.WriteLine("NO OWNERS WERE FOUND IN THE DATABASE");
+            }
+                Console.WriteLine(strLineBreak);
         }
 
         private static void AllPetDetails(VetPracticeContainer db)
         {
-            var query = from pet in db.Pets select pet;
-            Console.WriteLine("PET DETAILS");
-            Console.WriteLine("|{0,5}|{1,10}|{2,15}|{3,15}|{4,10}|", "ID", "Name", "Type", "Breed", "Owner ID");
-            foreach (var item in query)
+            var PetQuery = from pet in db.Pets select pet;
+            if (PetQuery.Any())
             {
-                Console.WriteLine("---------------------------------------------------------------------------");
-                Console.WriteLine(String.Format("|{0,5}|{1,10}|{2,15}|{3,15}|{4,10}|", item.Id, item.Name, item.Type, item.Breed, item.OwnerId));
+                Console.WriteLine("PET DETAILS");
+                Console.WriteLine("|{0,5}|{1,10}|{2,15}|{3,15}|{4,10}|", "ID", "Name", "Type", "Breed", "Owner ID");
+                foreach (var item in PetQuery)
+                {
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.WriteLine(String.Format("|{0,5}|{1,10}|{2,15}|{3,15}|{4,10}|", item.Id, item.Name, item.Type, item.Breed, item.OwnerId));
+                }
             }
-
+            else
+            {
+                Console.WriteLine("NO PETS WERE FOUND IN THE DATABASE");
+            }
             Console.WriteLine(strLineBreak);
-
         }
 
         private static void PracticeDetails(VetPracticeContainer db)
@@ -119,17 +125,21 @@ namespace Assignment1
             }
             else
             {
-                var query = from vetPrac in db.Practices where vetPrac.RegNum == iRegNum select vetPrac;
-                Console.WriteLine("VETERANIAN PRACTICE DETAILS");
-                Console.WriteLine("|{0,10}|{1,20}|{2,20}|{3,12}|", "Reg Number", "Name", "Address", "Telephone#");
-                foreach (var item in query)
+                var PractQuery = from vetPrac in db.Practices where vetPrac.RegNum == iRegNum select vetPrac;
+                if (PractQuery.Any())
                 {
-                    Console.WriteLine("---------------------------------------------------------------------------");
-                    Console.WriteLine(String.Format("|{0,10}|{1,20}|{2,20}|{3,12}|", item.RegNum, item.PracticeName, item.Address, item.TelNo));
+                    Console.WriteLine("VETERANIAN PRACTICE DETAILS");
+                    Console.WriteLine("|{0,10}|{1,20}|{2,20}|{3,12}|", "Reg Number", "Name", "Address", "Telephone#");
+                    foreach (var item in PractQuery)
+                    {
+                        Console.WriteLine("---------------------------------------------------------------------------");
+                        Console.WriteLine(String.Format("|{0,10}|{1,20}|{2,20}|{3,12}|", item.RegNum, item.PracticeName, item.Address, item.TelNo));
+                    }
+                } else
+                {
+                    Console.WriteLine("NO PRACTICES WERE FOUND IN THE DATABASE");
                 }
-
                 Console.WriteLine(strLineBreak);
-
             }
         }
 
@@ -146,36 +156,31 @@ namespace Assignment1
                 isParsed = int.TryParse(Console.ReadLine(), out iPetID);
             }
 
-            var query = from pet in db.Pets where (pet.Id == iPetID) select pet;
-
-            if (query.Any())
+            var PetQuery = from pet in db.Pets where pet.Id == iPetID select pet;
+            if (PetQuery.Any())
             {
-                string strName = query.FirstOrDefault().Name;
-                string strType = query.FirstOrDefault().Type;
-                string strBreed = query.FirstOrDefault().Breed;
+                string strName = PetQuery.FirstOrDefault().Name;
+                string strType = PetQuery.FirstOrDefault().Type;
+                string strBreed = PetQuery.FirstOrDefault().Breed;
 
-                var query1 = from visit in db.Visits orderby visit.Date select visit;
+                var VisitQuery = from visit in db.Visits where visit.PetId == iPetID orderby visit.Date select visit;
 
                 Console.WriteLine("\nAPPOINTMENTS FOR NAME: " + strName + " TYPE: " + strType + " BREED: " + strBreed);
-                Console.WriteLine("|{0,15}|{1,20}|", "Date", "Notes");
+                Console.WriteLine("|{0,25}|{1,20}|", "Date", "Notes");
 
-                foreach (var item in query1)
+                foreach (var item in VisitQuery)
                 {
-                    Console.WriteLine("---------------------------------------------------------------------------");
-                    Console.WriteLine(String.Format("|{0,15}|{1,20}|", item.Date, item.Notes));
+                    Console.WriteLine("------------------------------------------------");
+                    Console.WriteLine(String.Format("|{0,25}|{1,20}|", item.Date, item.Notes));
 
                 }
-
                 Console.WriteLine(strLineBreak);
-
             }
             else
             {
                 Console.WriteLine("NO PETS WERE FOUND WITH THAT ID");
                 Console.WriteLine(strLineBreak);
             }
-
-
         }
 
         private static void VetDetails(VetPracticeContainer db)
@@ -183,58 +188,57 @@ namespace Assignment1
             Console.Write(strEnterVetID);
             int iVetID;
             bool isParsed = int.TryParse(Console.ReadLine(), out iVetID);
-
+            string strDateTime = "";
             while (!isParsed)
             {
                 Console.WriteLine("INVALID VET ID. ID CONSIST OF NUMBERS ONLY");
                 Console.Write(strEnterVetID);
                 isParsed = int.TryParse(Console.ReadLine(), out iVetID);
             }
-
             Console.Write(strEnterDate);
-            string strDateTime = Console.ReadLine();
 
-            while (!Regex.IsMatch(strDateTime, "[0-3][0-9]/[0-1][0-9]/[0-9]{4}"))
+            string strDate = Console.ReadLine();
+
+            while (!Regex.IsMatch(strDate, "[0-3][0-9]/[0-1][0-9]/[0-9]{4}"))
             {
                 Console.WriteLine("Invalid date");
                 Console.Write(strEnterDate);
-                strDateTime = Console.ReadLine();
+                strDate = Console.ReadLine();
             }
-
-
-            var query = from vet in db.Vets where vet.StaffNo == iVetID select vet;
-            if (query.Any())
+            var VetQuery = from vet in db.Vets where vet.StaffNo == iVetID select vet;
+            if (VetQuery.Any())
             {
-                string strVetName = query.FirstOrDefault().FirstName;
-                string strVetSurname = query.FirstOrDefault().Surname;
+                string strVetName = VetQuery.FirstOrDefault().FirstName;
+                string strVetSurname = VetQuery.FirstOrDefault().Surname;
 
-                Console.WriteLine("\nAPPOINTMENTS FOR VET: " + strVetSurname + ", " + strVetName + ", DATE: " + strDateTime);
-                Console.WriteLine("|{0,10}|{1,15}|{2,20}|", "Pet", "Owner", "Notes");
-                Console.WriteLine("----------------------------------------------------");
+                Console.WriteLine("\nAPPOINTMENTS FOR VET: " + strVetSurname + ", " + strVetName);
+                Console.WriteLine("|{0,20}|{1,10}|{2,15}|{3,10}|", "Date", "Pet", "Owner", "Notes");
+                Console.WriteLine("----------------------------------------------------------------");
 
-                var query1 = from app in db.Visits where app.VetId.Equals(iVetID) select app;
-                foreach (var item in query1)
+                var AppQuery = from app in db.Visits where app.VetId.Equals(iVetID) select app;
+                if (AppQuery.Any())
                 {
-                    if (item.Date.ToString().Contains(strDateTime))
+                    strDateTime = AppQuery.FirstOrDefault().Date.ToString();
+                }
+                foreach (var item in AppQuery)
+                {
+                    if (item.Date.ToString().Contains(strDate))
                     {
                         string strNotes = item.Notes;
-                        var query2 = from pet in db.Pets where pet.Id == item.PetId select pet;
-                        string strPetName = query2.FirstOrDefault().Name;
-                        int iOwnerId = query2.FirstOrDefault().OwnerId;
-                        var query3 = from owner in db.Owners where owner.Id == iOwnerId select owner;
-                        string strOwnerName = query3.FirstOrDefault().Surname + ", " + query3.FirstOrDefault().FirstName;
+                        var PetQuery = from pet in db.Pets where pet.Id == item.PetId select pet;
+                        string strPetName = PetQuery.FirstOrDefault().Name;
+                        int iOwnerId = PetQuery.FirstOrDefault().OwnerId;
+                        var OwnerQuery = from owner in db.Owners where owner.Id == iOwnerId select owner;
+                        string strOwnerName = OwnerQuery.FirstOrDefault().Surname + ", " + OwnerQuery.FirstOrDefault().FirstName;
 
-                        Console.WriteLine("|{0,10}|{1,15}|{2,20}|", strPetName, strOwnerName, strNotes);
-
+                        Console.WriteLine("|{0,20}|{1,10}|{2,15}|{3,10}|", strDateTime, strPetName, strOwnerName, strNotes);
                     }
                 }
-
                 Console.WriteLine();
-
             }
             else
             {
-                Console.WriteLine("NO VETS WERE FOUND WITH THAT ID");
+                Console.WriteLine("NO VETS WERE FOUND WITH THAT ID OR THERE ARE NO APPOINTMENTS ON THAT DATE");
                 Console.WriteLine(strLineBreak);
             }
         }
@@ -256,13 +260,12 @@ namespace Assignment1
                 isParsed = int.TryParse(Console.ReadLine(), out iPetID);
             }
 
-
             var VisitQuery = from visit in db.Visits orderby visit.Date descending where visit.PetId == iPetID select visit;
-
             string strVisitNotes = VisitQuery.FirstOrDefault().Notes;
             int iVisitID = VisitQuery.FirstOrDefault().Id;
             string strDate = VisitQuery.FirstOrDefault().Date.ToString();
             int iVetID = VisitQuery.FirstOrDefault().VetId;
+            iTotalCost += VisitQuery.FirstOrDefault().Cost;
 
 
             var VetQuery = from vet in db.Vets where vet.Id == iVetID select vet;
@@ -282,7 +285,6 @@ namespace Assignment1
                     int iTreatmentID = treatment.Id;
                     strTreatmentName = treatment.Name;
                     iTreatmentCost = treatment.Cost;
-                    iTotalCost += treatment.Cost;
                     var MedQuery = from medication in db.Medications where medication.TreatmentId == iTreatmentID select medication;
 
                     Console.WriteLine("TREATMENT FOR: " + strTreatmentName + "\nITEMISED BILL:");
@@ -299,18 +301,16 @@ namespace Assignment1
                         Console.WriteLine("|{0,20}|{1,10}|{2,10}|", strMedication, iDose.ToString()+"mg", "£" + iMedCost.ToString());
                         Console.WriteLine("--------------------------------------------");
                     }
-
-
-
                 }
-                
                 Console.WriteLine("{0,43}", "Appointment Cost: £" + iTreatmentCost);
                 Console.WriteLine("{0,43}", "TOTAL: £" + iTotalCost.ToString());
-                //Console.WriteLine("{0,43}", "£" + iTotalCost.ToString());
+            }else
+            {
+                Console.WriteLine("THERE IS NO ITEMISED BILL FOR THIS VISIT");
+                Console.WriteLine("{0,43}", "Appointment Cost: £" + iTreatmentCost);
+                Console.WriteLine("{0,43}", "TOTAL: £" + iTotalCost.ToString());
             }
-
             Console.WriteLine(strLineBreak);
-
         }
     }
 }
