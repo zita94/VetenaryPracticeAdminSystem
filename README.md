@@ -1,4 +1,4 @@
-# Assignment1
+# Vetenary Practice Admin System using Entity Framework and LINQ
 
 For this assignment I was tasked with designing, building and deploying an enterprise-style console application to manage a veterinary practice. 
 
