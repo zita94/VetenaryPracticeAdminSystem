@@ -42,4 +42,5 @@ Given a PetNum calculate the cost of the most recent visit to the vet if the cha
 <img src="https://github.com/zita94/VetenaryPracticeAdminSystem/assets/56891175/8cb69dec-2974-4eb4-8d86-acc9e8c25221">
 
 ##
+Final Grade: 100  
 COM580 Enterprise Computing
